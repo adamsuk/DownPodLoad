@@ -28,17 +28,17 @@ def dicpod(text_file='my_pods.txt'):
     with open(text_file) as f:
         # read each line as an element, and filter empty lines
         raw_text = list(filter(None,f.read().split('\n')))
-        
+
     # initialise pods dictionary
     pods = {}
-        
+
     # split raw data by tabs to gain name rss url pairs
     for raw_line in raw_text:
         pod = raw_line.split('\t')
         pods[pod[0]] = pod[1]
-    
+
     return pods
-    
+
 if __name__ == '__main__':
     pods = dicpod()
     print(pods)

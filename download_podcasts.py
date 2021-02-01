@@ -3,7 +3,7 @@
 """
 v0.3 - call to find_file in run_me to obtain podcast dictionary
        of name/url pairs.
-       
+
 v0.2 - podcast information now obtained from podcast_info
 
 v0.1 - initial write of download_podcasts script
@@ -69,7 +69,7 @@ def check_dirs(root, req_pod_dic):
     for missing_dir in missing_dirs:
         os.mkdir(missing_dir)
         print 'Made directory:',missing_dir,'\n'
-        
+
     # return directories that already existed
     return exits_dirs
 
@@ -78,12 +78,12 @@ def get_files(dirs):
     Obtains a list of .mp3 files in a given directory
     """
     exist_files = {}
-    
+
     for direc in dirs:
-        
+
         # obtain list of files in dir
         _,_,files = os.walk(direc).next()
-        
+
         # set exist_files dictionary with
         #    key - directory
         #    value - list of files that exist
@@ -97,7 +97,7 @@ def get_files(dirs):
         #    audio.pprint()
         exist_files[direc] = files
     return exist_files
-    
+
 def download_missing(root, pod_name, podcast, old_pods):
     """Uses podcast_info to obtain all required info"""
     print color.BOLD + color.UNDERLINE + pod_name + color.END
@@ -108,7 +108,7 @@ def download_missing(root, pod_name, podcast, old_pods):
         # match name ie download_name without special characters
         check_name = re.sub('[\\/*?"<>|]', '', re.sub(':', ' -',\
                      str(ep)))
-        
+
         # check if episode name is in the found .mp3 files
         if any(str(check_name) in string for string in old_pods):
             # obtain full string of match
@@ -121,26 +121,26 @@ def download_missing(root, pod_name, podcast, old_pods):
                 print('RENAME! '+str(match[0])+' to '+\
                     info['download_name']+'.mp3')
                 os.rename(os.path.join(root,pod_name,str(match[0])), os.path.join(root,pod_name,info['download_name']+'.mp3'))
-                
+
             # else print error message
             else:
                 print('Too many matches in download location for'+ep)
         else:
             print('DOWNLOAD: ' + info['download_name'])
-            
+
             # iterate through mp3 urls - allows some failed
             # urls to exist
             n = 0
-            
+
             # if download 'True' set complete to 'False'
             if download:
                 complete = False
             else:
                 complete = True
-            
+
             # if debug print mp3 url
             if debug: print(info['mp3_link'][n])
-            
+
             # go through while podcast until podcast downloaded
             # or all options exhausted
             while not complete:
@@ -173,7 +173,7 @@ def download_missing(root, pod_name, podcast, old_pods):
                     elif info['m4a_link']:
                         if n >= len(info['m4a_link']):
                             complete = True
-    
+
 def run_me():
     # set root directory
     root = os.getcwd()
@@ -201,7 +201,7 @@ def run_me():
                 old_files[pod] = []
             # run each podcast through download_missing function
             download_missing(root, pod, req_pods[pod], old_files[pod])
-    
+
 if __name__ == '__main__':
     run_me()
 

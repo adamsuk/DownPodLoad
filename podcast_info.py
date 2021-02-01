@@ -59,7 +59,7 @@ class PodcastInfo(object):
                 entry.title = entry.title.encode()
             except UnicodeEncodeError:
                 entry.title = smart_str(entry.title)
-                
+
             # download name requires no special characters
             download_name = re.sub('[\\/*?"<>|]', '', re.sub(':', ' -',\
                 entry.title)) # previously article_title
@@ -71,9 +71,9 @@ class PodcastInfo(object):
                                           'm4a_link':m4a_urls,
                                           'published':reordered_date
                                           }
-                                              
+
         return self.episodes
-    
+
     def get_url(self, substring, dictionary):
         """finds substring in dictionary"""
         for key, value in sorted(dictionary.items()):
